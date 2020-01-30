@@ -6,7 +6,7 @@
 /*   By: sverona <sverona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 17:29:36 by sverona           #+#    #+#             */
-/*   Updated: 2020/01/27 21:56:50 by sverona          ###   ########.fr       */
+/*   Updated: 2020/01/30 18:29:02 by sverona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "include/FdF.h"
 
-void	ft_plot(t_fdf_list fdf_list, int x, int y)
+void	ft_plot(t_fdf_list fdf_list, float x, float y)
 {
 	int i;
 
@@ -26,29 +26,81 @@ void	ft_plot(t_fdf_list fdf_list, int x, int y)
 	
 }
 
-void	ft_line(t_fdf_list fdf_list, t_coord_list coord_list)
+void	ft_line(t_fdf_list fdf_list, t_point point1, t_point point2)
 {
-	int	d;
-	int	d1;
-	int	d2;
-	int	x0;
-	int	x1;
+	float	d;
+	float	d1;
+	float	d2;
+	float	x0;
+	float	x1;
 
-	while (coord_list.x0 < coord_list.x1)
+	if (point1.y > point2.y)
 	{
-		coord_list.x0++;
-		d = (2 * (coord_list.y1 - coord_list.y0) - (coord_list.x1 - coord_list.x0));
-		d1 = 2 * (coord_list.y1 - coord_list.y0);
-		d2 = ((coord_list.y1 - coord_list.y0) - (coord_list.x1 - coord_list.x0)) * 2;
-		if (d < 0)
-			d += d1;
-		else
-		{
-			coord_list.y0++;
-			d += d2;
+		while (point1.x < point2.x)
+		{	
+			point1.x++;
+			d = (2 * (point1.y - point2.y) - (point2.x - point1.x));
+			d1 = 2 * (point1.y - point2.y);
+			d2 = ((point1.y - point2.y) - (point2.x - point1.x)) * 2;
+			if (d < 0)
+				d += d1;
+			else
+			{
+				point1.y--;
+				d += d2;
+			}
+		ft_plot(fdf_list, point1.x, point1.y);
 		}
-		ft_plot(fdf_list, coord_list.x0, coord_list.y0);
+		while (point1.x > point2.x)
+		{
+			point1.x--;
+			d = (2 * (point1.y - point2.y) - (point2.x - point1.x));
+			d1 = 2 * (point1.y - point2.y);
+			d2 = ((point1.y - point2.y) - (point2.x - point1.x)) * 2;
+			if (d < 0)
+				d += d1;
+			else
+			{
+				point1.y--;
+				d += d2;
+			}
+			ft_plot(fdf_list, point1.x, point1.y);
+		}
 	}
+	else
+	{
+		while (point1.x < point2.x)
+		{
+			point1.x++;
+			d = (2 * (point2.y - point1.y) - (point2.x - point1.x));
+			d1 = 2 * (point2.y - point2.y);
+			d2 = ((point2.y - point1.y) - (point2.x - point1.x)) * 2;
+			if (d < 0)
+				d += d1;
+			else
+			{
+				point1.y++;
+				d += d2;
+			}
+			ft_plot(fdf_list, point1.x, point1.y);
+		}
+		while (point1.x > point2.x)
+		{
+			point1.x--;
+			d = (2 * (point2.y - point1.y) - (point2.x - point1.x));
+			d1 = 2 * (point2.y - point2.y);
+			d2 = ((point2.y - point1.y) - (point2.x - point1.x)) * 2;
+			if (d < 0)
+				d += d1;
+			else
+			{
+				point1.y++;
+				d += d2;
+			}
+			ft_plot(fdf_list, point1.x, point1.y);
+		}
+	}
+
 }
 
 
@@ -56,10 +108,8 @@ void	ft_line(t_fdf_list fdf_list, t_coord_list coord_list)
 int		main()
 {
 	t_fdf_list	fdf_list;
-	t_coord_list	coord_list;
-	//int		i;
-	//int		x;
-	//int		y;
+	t_point	point1;
+	t_point	point2;
 
 	//x = 0;
 	fdf_list.mlx_ptr = mlx_init();
@@ -72,12 +122,12 @@ int		main()
 	//fdf_list.img_g[i] = 88;
 	//fdf_list.img_g[i + 2] = 255;
 
-	coord_list.x0 = 0;
-	coord_list.x1 = 100;
-	coord_list.y0 = 0;
-	coord_list.y1 = 100;
+	point1.x = 100;
+	point2.x = 0;
+	point1.y = 100;
+	point2.y = 0;
 	//ft_line(fdf_list, coord_list);
-	ft_line(fdf_list, coord_list);
+	ft_line(fdf_list, point1, point2);
 	//mlx_put_image_to_window(fdf_list.mlx_ptr, fdf_list.win_ptr, fdf_list.img_ptr, 50, 50);
 	mlx_loop(fdf_list.mlx_ptr);
 }
