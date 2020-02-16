@@ -6,7 +6,7 @@
 /*   By: sverona <sverona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:35:26 by sverona           #+#    #+#             */
-/*   Updated: 2020/02/16 19:49:30 by sverona          ###   ########.fr       */
+/*   Updated: 2020/02/16 23:00:37 by sverona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,37 +63,42 @@ int			*ft_coord_mas(t_lint *listhead)
 	return (mas);
 }
 
-void	ft_draw(int	*mas, t_fdf_list fdf_list)
+static void iso(float *x, float *y, int z)
+{
+	*x = (*x - *y) * cos(0.8);
+	*y = (*x + *y) * sin(0.8) - z;
+}
+
+void		ft_draw(int *mas, t_fdf_list fdf_list)
 {
 	t_point	one;
 	t_point	two;
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	int		z;
 
 	y = 0;
-	printf("y = %d\n" , mas[1]);
-	printf("x = %d\n" , (mas[0] / mas[1]));
+	z = 2;
 	while (y < mas[1])
 	{
 		x = 0;
 		while (x < (mas[0] / mas[1]))
 		{
-			if (x % 2)
-			{
-				one.x = x;
-				one.y = y;
-				one.z = mas[x + y * 10];
-			}
-			else
-			{
-				two.x = x;
-				two.y = y;
-				two.z = mas[x + y * 10];
-			}
+
+			one.x = x;
+			two.x = x + 1;
+			one.y = y;
+			two.y = y;
+			one.z = mas[z];
+			two.z = mas[z];
+			ft_line(fdf_list, one, two);
+			two.x = x;
+			two.y = y + 1;
 			ft_line(fdf_list, one, two);
 			x++;
+			if (z < 209)
+				z++;
 		}
 		y++;
 	}
 }
-
