@@ -6,7 +6,7 @@
 /*   By: sverona <sverona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 18:35:26 by sverona           #+#    #+#             */
-/*   Updated: 2020/02/16 23:00:37 by sverona          ###   ########.fr       */
+/*   Updated: 2020/02/25 18:05:18 by sverona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,15 @@ int			*ft_coord_mas(t_lint *listhead)
 
 static void iso(float *x, float *y, int z)
 {
-	*x = (*x - *y) * cos(0.8);
-	*y = (*x + *y) * sin(0.8) - z;
+	float s_x;
+	float s_y;
+	
+	s_x = *x;
+	s_y = *y;
+	*x = (s_x - s_y) * cos(0.7);
+	*y = -z + (s_x + s_y) * sin(0.7);
 }
+
 
 void		ft_draw(int *mas, t_fdf_list fdf_list)
 {
@@ -78,7 +84,7 @@ void		ft_draw(int *mas, t_fdf_list fdf_list)
 	int		z;
 
 	y = 0;
-	z = 2;
+	z = 210;
 	while (y < mas[1])
 	{
 		x = 0;
@@ -91,13 +97,13 @@ void		ft_draw(int *mas, t_fdf_list fdf_list)
 			two.y = y;
 			one.z = mas[z];
 			two.z = mas[z];
-			ft_line(fdf_list, one, two);
+			ft_line(one, two, fdf_list);
+			//printf("x1 = %f y1 = %f x2 = %f y2 = %f\n", one.x, one.y, two.x, two.y);
 			two.x = x;
 			two.y = y + 1;
-			ft_line(fdf_list, one, two);
+			ft_line(one, two, fdf_list);
 			x++;
-			if (z < 209)
-				z++;
+			z--;
 		}
 		y++;
 	}

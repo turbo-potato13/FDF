@@ -6,7 +6,7 @@
 /*   By: sverona <sverona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 14:55:04 by sverona           #+#    #+#             */
-/*   Updated: 2020/02/16 23:23:55 by sverona          ###   ########.fr       */
+/*   Updated: 2020/02/20 17:47:29 by sverona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	ft_lintadd(t_lint **alst, t_lint *new);
 int		*ft_coord_mas(t_lint *listhead);
 t_lint	*ft_get_coords(char *line, int fd);
 void	ft_draw(int	*mas, t_fdf_list fdf_list);
-void	ft_line(t_fdf_list fdf_list, t_point point1, t_point point2);
 void	ft_plot(t_fdf_list fdf_list, float x, float y);
-void	ft_line(t_fdf_list fdf_list, t_point point1, t_point point2);
+void	ft_line(t_point point1, t_point point2, t_fdf_list fdf_list);
 void	ft_iso(float *x, float *y, float z);
+void	bresen(t_point point1, t_point point2, t_fdf_list fdf_list);
 
 #endif
